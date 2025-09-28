@@ -1,0 +1,68 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* CROCKNESTCLUB Color System */
+  --brand: #8a9a7b;
+  --brand-dark: #5a6b4d;
+  --bg: #fefdfb;
+  --surface: #f7f5f1;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --line: #d4cfc7;
+  --accent: #b8c2a7;
+  --neutral: #9d9389;
+
+  /* Sophisticated shadows */
+  --shadow-sm: 0 2px 8px rgba(26, 26, 26, .06);
+  --shadow-md: 0 4px 20px rgba(26, 26, 26, .08);
+  --shadow-lg: 0 8px 32px rgba(26, 26, 26, .12);
+
+  /* Organic border radius */
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  /* Refined spacing scale */
+  --sp-1: .25rem;
+  --sp-2: .5rem;
+  --sp-3: .75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* Typography system */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Brand-specific elements */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-organic: 1px solid var(--line);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.rounded {
+  border-radius: var(--radius);
+}
+
+.transition {
+  transition: var(--transition);
+}

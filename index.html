@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CROCKNESTCLUB — Modern E‑Commerce</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      /* CROCKNESTCLUB Color System */
+      --brand: #8a9a7b;        /* botanical green (primary accent) */
+      --brand-dark: #5a6b4d;   /* forest green (hover states) */
+      --bg: #fefdfb;           /* warm ivory background */
+      --surface: #f7f5f1;      /* cream cards, surfaces */
+      --text: #1a1a1a;         /* deep charcoal text */
+      --muted: #6b6b6b;        /* warm gray secondary text */
+      --line: #d4cfc7;         /* soft taupe dividers */
+      --accent: #b8c2a7;       /* golden sage highlights */
+      --neutral: #9d9389;      /* mushroom secondary elements */
+      
+      /* Sophisticated shadows */
+      --shadow-sm: 0 2px 8px rgba(26, 26, 26, .06);
+      --shadow-md: 0 4px 20px rgba(26, 26, 26, .08);
+      --shadow-lg: 0 8px 32px rgba(26, 26, 26, .12);
+      
+      /* Organic border radius */
+      --radius: 8px;
+      --radius-lg: 12px;
+
+      /* Refined spacing scale (premium feel) */
+      --sp-1: .25rem;
+      --sp-2: .5rem;
+      --sp-3: .75rem;
+      --sp-4: 1rem;
+      --sp-5: 1.25rem;
+      --sp-6: 1.5rem;
+      --sp-8: 2rem;
+      --sp-10: 2.5rem;
+      --sp-12: 3rem;
+      --sp-16: 4rem;    /* Added for premium generous spacing */
+      
+      /* Typography system */
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      
+      /* Brand-specific elements */
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --border-organic: 1px solid var(--line);
+    }
+
+    /* Base */
+    *{ box-sizing:border-box }
+    html{ scroll-behavior:smooth }
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.6;
+    }
+    img{ max-width:100%; display:block }
+    a{ color:inherit; text-decoration:none }
+    button{ font:inherit }
+    .container{ width:100%; max-width:1200px; margin-inline:auto; padding-inline:var(--sp-4) }
+
+    /* Typography */
+    h1,h2,h3{ margin:0 0 var(--sp-3) }
+    .h1{ font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight:700; letter-spacing:-0.01em }
+    .h2{ font-size: clamp(1.125rem, 1.8vw, 1.5rem); font-weight:600 }
+    .h3{ font-size: 1rem; font-weight:600 }
+    .subtle{ color:var(--muted) }
+    .small{ font-size:.875rem }
+
+    /* Header */
+    .topbar{
+      background:var(--brand); color:#fff; font-weight:600; font-size:.875rem;
+      padding: var(--sp-2) var(--sp-4); text-align:center
+    }
+    header{
+      position:sticky; top:0; z-index:50; background:var(--surface);
+      border-bottom:1px solid var(--line)
+    }
+    .header-row{
+      display:flex; align-items:center; gap:var(--sp-3); padding: var(--sp-3) 0;
+    }
+    .brand{ font-weight:800; letter-spacing:-.02em }
+    .brand .logo{
+      display:inline-flex; align-items:center; gap:.5rem; font-size:1.125rem
+    }
+    .brand .mark{
+      width:28px; height:28px; border-radius:8px; background:var(--brand); color:#fff;
+      display:grid; place-items:center; font-weight:700; box-shadow:var(--shadow-sm)
+    }
+    .nav{
+      display:none; gap:var(--sp-6); margin-inline:auto
+    }
+    .nav a{
+      position:relative; font-weight:600; letter-spacing:.02em
+    }
+    .nav a.active::after, .nav a:hover::after{
+      content:""; position:absolute; left:0; right:0; bottom:-10px; height:2px; background:var(--brand)
+    }
+    .search{
+      position:relative; flex:1 1 auto; max-width:540px; display:none
+    }
+    .search input{
+      width:100%; border:1px solid var(--line); border-radius:999px; padding:.65rem 2.5rem .65rem 2.75rem;
+      background:#fff; outline:none; transition:box-shadow .2s, border-color .2s
+    }
+    .search input:focus{ border-color:var(--brand); box-shadow:0 0 0 3px rgba(225,29,42,.12) }
+    .search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted) }
+    .icon-btn{
+      background:#fff; border:1px solid var(--line); border-radius:999px; width:40px; height:40px;
+      display:grid; place-items:center; cursor:pointer; transition:transform .12s, border-color .2s;
+    }
+    .icon-btn:hover{ transform:translateY(-1px); border-color:#d1d5db }
+    .actions{ display:flex; align-items:center; gap:var(--sp-2) }
+    .hamburger{ display:inline-flex }
+    .cart-badge{
+      position:absolute; top:-6px; right:-6px; background:var(--brand); color:#fff; border-radius:999px;
+      font-size:.7rem; padding:.1rem .35rem; min-width:1.25rem; text-align:center
+    }
+
+    /* Mobile drawer menu */
+    .mobile-drawer{
+      position:fixed; inset:0; display:none;
+    }
+    .mobile-drawer.open{ display:block }
+    .drawer-backdrop{
+      position:absolute; inset:0; background:rgba(0,0,0,.35); opacity:0; transition:opacity .2s
+    }
+    .mobile-drawer.open .drawer-backdrop{ opacity:1 }
+    .drawer-panel{
+      position:absolute; top:0; bottom:0; left:0; width:min(84vw, 320px); background:var(--surface);
+      border-right:1px solid var(--line); transform:translateX(-100%); transition:transform .25s; padding:var(--sp-4)
+    }
+    .mobile-drawer.open .drawer-panel{ transform:translateX(0) }
+    .drawer-panel a{ display:block; padding:.75rem 0; font-weight:600 }
+
+    /* Buttons */
+    .btn{ appearance:none; border:none; border-radius:999px; padding:.7rem 1rem; cursor:pointer; font-weight:600;
+      transition:transform .08s ease, box-shadow .15s ease, background .2s ease, color .2s ease }
+    .btn:active{ transform:translateY(1px) }
+    .btn-primary{ background:var(--brand); color:#fff; box-shadow:var(--shadow-sm) }
+    .btn-primary:hover{ filter:brightness(.95) }
+    .btn-secondary{ background:#111827; color:#fff }
+    .btn-ghost{ background:#fff; border:1px solid var(--line) }
+    .btn-block{ width:100% }
+
+    /* Hero carousel (scroll-snap) */
+    .hero{
+      position:relative; overflow:hidden; background:var(--surface); border-bottom:1px solid var(--line)
+    }
+    .slides{
+      display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch; gap:var(--sp-4); padding: var(--sp-4) var(--sp-4) var(--sp-6);
+    }
+    .slide{
+      min-width:90vw; max-height:520px; border-radius:var(--radius); overflow:hidden; scroll-snap-align:center;
+      box-shadow:var(--shadow-md); position:relative; background:#ddd
+    }
+    .slide img{ width:100%; height:100%; object-fit:cover }
+    .hero-controls{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; pointer-events:none;
+      padding:0 var(--sp-4)
+    }
+    .hero-controls .arrow{
+      pointer-events:auto; width:40px; height:40px; border-radius:999px; border:1px solid rgba(255,255,255,.6);
+      background:rgba(17,24,39,.35); color:#fff; display:grid; place-items:center
+    }
+    .dots{ position:absolute; left:50%; transform:translateX(-50%); bottom:12px; display:flex; gap:6px }
+    .dot{ width:8px; height:8px; border-radius:999px; background:#e5e7eb; opacity:.75 }
+    .dot.active{ background:var(--brand); opacity:1 }
+
+    /* Sections */
+    section{ padding: var(--sp-8) 0 }
+    .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-4) }
+
+    /* Categories */
+    .categories{
+      display:flex; gap:var(--sp-3); overflow-x:auto; padding-bottom:var(--sp-2)
+    }
+    .cat-card{
+      flex:0 0 auto; background:var(--surface); border:1px solid var(--line); border-radius:16px;
+      width:140px; padding:var(--sp-3); box-shadow:var(--shadow-sm); transition:transform .15s
+    }
+    .cat-card:hover{ transform:translateY(-2px) }
+    .cat-thumb{ aspect-ratio:1/1; border-radius:12px; overflow:hidden; background:#e5e7eb; margin-bottom:var(--sp-2) }
+
+    /* Products grid */
+    .products-grid{
+      display:grid; gap:var(--sp-4);
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .product-card{
+      background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+      transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .product-card:hover{
+      transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:#d1d5db;
+    }
+    .product-media{ position:relative; aspect-ratio: 3/4; overflow:hidden; background:#ddd }
+    .badge{
+      position:absolute; top:10px; left:10px; background:rgba(17,24,39,.9); color:#fff; font-size:.7rem;
+      border-radius:999px; padding:.25rem .5rem; letter-spacing:.04em; font-weight:700
+    }
+    .product-body{ padding:var(--sp-3) }
+    .title{ font-weight:600; margin-bottom:.25rem }
+    .meta{ color:var(--muted); font-size:.9rem }
+    .price-row{ display:flex; align-items:center; justify-content:space-between; margin-top:var(--sp-3) }
+    .price{ font-weight:700 }
+    .rupee{ font-variant-numeric: tabular-nums }
+
+    /* Mini-cart */
+    .minicart{
+      position:fixed; top:0; right:0; bottom:0; width:min(92vw, 420px); background:var(--surface);
+      box-shadow: -16px 0 40px rgba(17,24,39,.12); transform:translateX(100%); transition:transform .25s; z-index:60;
+      display:flex; flex-direction:column; border-left:1px solid var(--line)
+    }
+    .minicart.open{ transform:translateX(0) }
+    .cart-header{ padding:var(--sp-4); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line) }
+    .cart-items{ padding:var(--sp-4); overflow:auto; flex:1 }
+    .cart-row{
+      display:grid; grid-template-columns:64px 1fr auto; gap:var(--sp-3); align-items:center; padding-bottom:var(--sp-3);
+      border-bottom:1px dashed var(--line); margin-bottom:var(--sp-3)
+    }
+    .qty{
+      display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden
+    }
+    .qty button{ width:28px; height:28px; background:#fff }
+    .qty span{ display:grid; place-items:center; width:36px }
+    .cart-footer{ padding:var(--sp-4); border-top:1px solid var(--line) }
+    .summary{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-3) }
+
+    /* Footer */
+    footer{ background:#fff; border-top:1px solid var(--line) }
+    .footer-grid{
+      display:grid; gap:var(--sp-6); grid-template-columns:1fr;
+    }
+    .newsletter{
+      display:flex; gap:var(--sp-2); margin-top:var(--sp-3)
+    }
+    .newsletter input{
+      flex:1; border:1px solid var(--line); border-radius:10px; padding:.7rem .9rem; outline:none
+    }
+    .socials{ display:flex; gap:10px; margin-top:var(--sp-3) }
+    .muted{ color:var(--muted); font-size:.9rem }
+
+    /* Utilities */
+    .row{ display:flex; align-items:center; gap:var(--sp-3) }
+    .hide-sm{ display:none }
+    .divider{ height:1px; background:var(--line); margin:var(--sp-6) 0 }
+
+    /* Responsive */
+    @media (min-width: 768px){
+      .nav{ display:flex }
+      .search{ display:block }
+      .hamburger{ display:none }
+      .slide{ min-width:70vw }
+      .products-grid{ grid-template-columns: repeat(3, 1fr) }
+      .footer-grid{ grid-template-columns:1.2fr 1fr 1fr 1fr }
+    }
+    @media (min-width: 1024px){
+      .slide{ min-width:60vw }
+      .products-grid{ grid-template-columns: repeat(4, 1fr) }
+    }
+  </style>
+</head>
+<body>
+   Top promo bar (mobile-style like reference) 
+  <div class="topbar small">Download our App & get 10% additional cashback on all orders</div>
+
+   Header 
+  <header>
+    <div class="container header-row">
+      <button class="icon-btn hamburger" id="openMenu" aria-label="Open menu">
+         menu icon 
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="brand">
+        <a class="logo" href="#">
+          <span class="mark">SS</span>
+          CROCKNESTCLUB
+        </a>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="active" href="#">MEN</a>
+        <a href="#">WOMEN</a>
+        <a href="#">SNEAKERS</a>
+      </nav>
+
+      <form class="search" role="search" aria-label="Site">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="search" placeholder="What are you looking for?" />
+      </form>
+
+      <div class="actions">
+        <button class="icon-btn" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-5 0-9 2.5-9 5v1h18v-1c0-2.5-4-5-9-5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12.1 20.3 4.3 12.5a5.6 5.6 0 0 1 7.9-7.9l-.1.1.1-.1a5.6 5.6 0 0 1 7.9 7.9l-7.8 7.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="openCart" aria-label="Open cart" style="position:relative">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9H8L6 3H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="20" r="1.8" fill="currentColor"/><circle cx="18" cy="20" r="1.8" fill="currentColor"/></svg>
+          <span class="cart-badge" id="cartCount" aria-live="polite">0</span>
+        </button>
+      </div>
+    </div>
+
+     Mobile drawer 
+    <div class="mobile-drawer" id="drawer">
+      <div class="drawer-backdrop" id="closeMenu" aria-hidden="true"></div>
+      <aside class="drawer-panel" role="dialog" aria-label="Mobile Navigation">
+        <div class="row" style="justify-content:space-between; margin-bottom:var(--sp-4)">
+          <span class="h3">Browse</span>
+          <button class="icon-btn" id="closeMenuBtn" aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <a href="#" class="active">MEN</a>
+        <a href="#">WOMEN</a>
+        <a href="#">SNEAKERS</a>
+        <div class="divider"></div>
+        <a href="#">New Arrivals</a>
+        <a href="#">Sale</a>
+        <a href="#">Track Order</a>
+      </aside>
+    </div>
+  </header>
+
+   Hero 
+  <section class="hero" aria-label="Featured">
+    <div class="slides" id="slides">
+       Use provided reference images (must use Source URL) 
+      <article class="slide" aria-roledescription="slide">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-wVEpvIc94kvPruWgrYf9O8h4pSGSHW.png" alt="Featured streetwear collection mobile hero" />
+      </article>
+      <article class="slide" aria-roledescription="slide">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-p5kUKp2sWxIOwmu3HKelgm3nNgCCGw.png" alt="Men collection grid preview desktop" />
+      </article>
+      <article class="slide" aria-roledescription="slide">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jSmZKYu6rMzPKzWzTv5tAqGDbOY4ox.png" alt="Curated menswear picks carousel" />
+      </article>
+    </div>
+    <div class="hero-controls container" aria-hidden="false">
+      <button class="arrow" id="prevSlide" aria-label="Previous slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18 9 12l6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="arrow" id="nextSlide" aria-label="Next slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+  </section>
+
+   Categories 
+  <section class="container" aria-labelledby="categories-title">
+    <div class="section-head">
+      <h2 id="categories-title" class="h2">Shop by Category</h2>
+    </div>
+    <div class="categories" id="categoryTrack">
+      <div class="cat-card">
+        <div class="cat-thumb"><img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=400&auto=format&fit=crop" alt="Oversized T‑Shirts" /></div>
+        <div class="h3">Oversized Tees</div>
+        <div class="subtle small">Explore</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-thumb"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=400&auto=format&fit=crop" alt="Jackets" /></div>
+        <div class="h3">Jackets</div>
+        <div class="subtle small">Layer up</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-thumb"><img src="https://images.unsplash.com/photo-1548883354-92c3e6e2ed6f?q=80&w=400&auto=format&fit=crop" alt="Shirts" /></div>
+        <div class="h3">Shirts</div>
+        <div class="subtle small">Smart casual</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-thumb"><img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=400&auto=format&fit=crop" alt="Sneakers" /></div>
+        <div class="h3">Sneakers</div>
+        <div class="subtle small">Step out</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-thumb"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=400&auto=format&fit=crop" alt="Loungewear" /></div>
+        <div class="h3">Loungewear</div>
+        <div class="subtle small">Stay comfy</div>
+      </div>
+    </div>
+  </section>
+
+   New Arrivals / Products 
+  <section class="container" aria-labelledby="new-title">
+    <div class="section-head">
+      <h2 class="h2" id="new-title">New Arrivals</h2>
+      <a class="small subtle" href="#">View all</a>
+    </div>
+
+    <div class="products-grid" id="products">
+       Product cards (data attributes used by JS) 
+      <article class="product-card" data-id="p1" data-name="Kung Fu Panda: Ramen" data-price="1299" data-img="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Kung Fu Panda: Ramen Shirt" />
+          <span class="badge">OVERSIZED FIT</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Kung Fu Panda: Ramen</div>
+          <div class="meta">Oversized Shirts</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1299</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p2" data-name="Ghost Rider: Hell Cycle Club" data-price="2599" data-img="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop" alt="Ghost Rider Jacket" />
+          <span class="badge">PREMIUM HEAVY</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Ghost Rider: Hell Cycle Club</div>
+          <div class="meta">Varsity Jackets</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 2599</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p3" data-name="Looney Tunes: That's All Folks" data-price="1599" data-img="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop" alt="Looney Tunes striped shirt" />
+          <span class="badge">RELAXED</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Looney Tunes: That's All Folks</div>
+          <div class="meta">Men Relaxed Shirts</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1599</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p4" data-name="Oversized T-Shirt: Regal" data-price="1499" data-img="https://images.unsplash.com/photo-1548883354-92c3e6e2ed6f?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1548883354-92c3e6e2ed6f?q=80&w=1200&auto=format&fit=crop" alt="Oversized Regal tee" />
+          <span class="badge">HEAVY GAUGE</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Oversized T‑Shirt: Regal</div>
+          <div class="meta">Oversized T‑Shirts</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1499</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p5" data-name="Retro Sneaker 90s" data-price="3299" data-img="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Retro sneakers" />
+          <span class="badge">NEW</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Retro Sneaker 90s</div>
+          <div class="meta">Sneakers</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 3299</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p6" data-name="Everyday Joggers" data-price="1399" data-img="https://images.unsplash.com/photo-1602810318383-9e3d77e5d0d2?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1602810318383-9e3d77e5d0d2?q=80&w=1200&auto=format&fit=crop" alt="Everyday joggers" />
+          <span class="badge">SOFT FLEECE</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Everyday Joggers</div>
+          <div class="meta">Loungewear</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1399</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p7" data-name="Classic Denim Shirt" data-price="1899" data-img="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=1200&auto=format&fit=crop" alt="Classic denim shirt" />
+          <span class="badge">BESTSELLER</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Classic Denim Shirt</div>
+          <div class="meta">Shirts</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1899</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card" data-id="p8" data-name="Monochrome Hoodie" data-price="1799" data-img="https://images.unsplash.com/photo-1520975940209-98c1d451c0b1?q=80&w=1200&auto=format&fit=crop">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1520975940209-98c1d451c0b1?q=80&w=1200&auto=format&fit=crop" alt="Monochrome hoodie" />
+          <span class="badge">OVERSIZED</span>
+        </div>
+        <div class="product-body">
+          <div class="title">Monochrome Hoodie</div>
+          <div class="meta">Hoodies</div>
+          <div class="price-row">
+            <div class="price rupee">₹ 1799</div>
+            <button class="btn btn-primary add">Add</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+   Footer 
+  <footer>
+    <div class="container" style="padding: var(--sp-8) 0">
+      <div class="footer-grid">
+        <div>
+          <div class="brand">
+            <span class="logo"><span class="mark">SS</span> SouledStyle</span>
+          </div>
+          <p class="muted" style="margin-top:var(--sp-3)">
+            Modern streetwear inspired by pop culture. Designed for comfort, made to stand out.
+          </p>
+          <div class="socials" aria-label="Social">
+            <a href="#" aria-label="Instagram">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter / X">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="2"/><path d="M10 9l6 3-6 3V9Z" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="h3">Shop</div>
+          <ul class="muted" style="padding:0; list-style:none; margin-top:var(--sp-3)">
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Sneakers</a></li>
+            <li><a href="#">New Arrivals</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="h3">Help</div>
+          <ul class="muted" style="padding:0; list-style:none; margin-top:var(--sp-3)">
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="h3">Newsletter</div>
+          <p class="muted">Get drops, offers and style inspo.</p>
+          <form class="newsletter" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@example.com" aria-label="Email address" />
+            <button class="btn btn-secondary">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="small subtle">© <span id="year"></span> SouledStyle. All rights reserved.</div>
+    </div>
+  </footer>
+
+   Mini Cart 
+  <aside class="minicart" id="minicart" aria-live="polite" aria-label="Cart">
+    <div class="cart-header">
+      <div class="h3">Your Cart</div>
+      <button class="icon-btn" id="closeCart" aria-label="Close cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="subtle">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="summary">
+        <span class="h3">Total</span>
+        <span class="h3 rupee" id="cartTotal">₹ 0</span>
+      </div>
+      <button class="btn btn-primary btn-block">Checkout</button>
+    </div>
+  </aside>
+
+  <script>
+    // Utilities
+    const $ = (sel, el = document) => el.querySelector(sel);
+    const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
+    const fmtINR = (n) => "₹ " + Number(n).toLocaleString("en-IN");
+
+    // Year
+    $("#year").textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const drawer = $("#drawer");
+    $("#openMenu").addEventListener("click", () => drawer.classList.add("open"));
+    $("#closeMenu").addEventListener("click", () => drawer.classList.remove("open"));
+    $("#closeMenuBtn").addEventListener("click", () => drawer.classList.remove("open"));
+
+    // Hero slider with scroll-snap
+    const slides = $("#slides");
+    const dots = $("#dots");
+    const makeDots = () => {
+      dots.innerHTML = "";
+      const items = $$(".slide", slides);
+      items.forEach((_, i) => {
+        const d = document.createElement("span");
+        d.className = "dot" + (i === 0 ? " active" : "");
+        dots.appendChild(d);
+      });
+    };
+    makeDots();
+
+    const updateDots = () => {
+      const items = $$(".slide", slides);
+      let idx = Math.round(slides.scrollLeft / (items[0].offsetWidth + parseFloat(getComputedStyle(slides).gap)));
+      $$(".dot", dots).forEach((el, i) => el.classList.toggle("active", i === idx));
+    };
+    slides.addEventListener("scroll", () => { requestAnimationFrame(updateDots); });
+
+    $("#prevSlide").addEventListener("click", () => slides.scrollBy({ left: -(slides.clientWidth * 0.92), behavior: "smooth" }));
+    $("#nextSlide").addEventListener("click", () => slides.scrollBy({ left: (slides.clientWidth * 0.92), behavior: "smooth" }));
+
+    // Auto-advance
+    let auto = setInterval(() => $("#nextSlide").click(), 5500);
+    slides.addEventListener("pointerdown", () => clearInterval(auto));
+
+    // Mini cart state
+    const minicart = $("#minicart");
+    const cartCount = $("#cartCount");
+    const cartItemsEl = $("#cartItems");
+    const cartTotalEl = $("#cartTotal");
+    const cart = new Map(); // id -> { id, name, price, qty, img }
+
+    const openCart = () => minicart.classList.add("open");
+    const closeCart = () => minicart.classList.remove("open");
+    $("#openCart").addEventListener("click", openCart);
+    $("#closeCart").addEventListener("click", closeCart);
+
+    const renderCart = () => {
+      if (cart.size === 0) {
+        cartItemsEl.innerHTML = '<p class="subtle">Your cart is empty.</p>';
+        cartTotalEl.textContent = fmtINR(0);
+        cartCount.textContent = 0;
+        return;
+      }
+      let total = 0;
+      cartItemsEl.innerHTML = "";
+      for (const item of cart.values()) {
+        total += item.price * item.qty;
+        const row = document.createElement("div");
+        row.className = "cart-row";
+        row.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" style="width:64px;height:64px;object-fit:cover;border-radius:10px;">
+          <div>
+            <div class="small subtle">${item.name}</div>
+            <div class="h3 rupee" style="margin-top:.25rem">${fmtINR(item.price)}</div>
+          </div>
+          <div style="display:grid; gap:6px; justify-items:end">
+            <div class="qty" role="group" aria-label="Quantity">
+              <button aria-label="Decrease">−</button>
+              <span aria-live="polite">${item.qty}</span>
+              <button aria-label="Increase">+</button>
+            </div>
+            <button class="small subtle" data-remove>Remove</button>
+          </div>
+        `;
+        // qty controls
+        const [dec, , inc] = row.querySelectorAll(".qty button, .qty span");
+        dec.addEventListener("click", () => { item.qty = Math.max(1, item.qty - 1); renderCart(); });
+        inc.addEventListener("click", () => { item.qty += 1; renderCart(); });
+        row.querySelector("[data-remove]").addEventListener("click", () => { cart.delete(item.id); renderCart(); });
+        cartItemsEl.appendChild(row);
+      }
+      cartTotalEl.textContent = fmtINR(total);
+      cartCount.textContent = [...cart.values()].reduce((s, i) => s + i.qty, 0);
+    };
+
+    // Add to cart buttons
+    $$(".product-card .add").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const card = e.currentTarget.closest(".product-card");
+        const id = card.dataset.id;
+        const name = card.dataset.name;
+        const price = Number(card.dataset.price);
+        const img = card.dataset.img || card.querySelector("img")?.src || "";
+        const existing = cart.get(id);
+        if (existing) existing.qty += 1;
+        else cart.set(id, { id, name, price, img, qty: 1 });
+        renderCart();
+        openCart();
+      });
+    });
+
+    // Accessibility: close minicart on Escape
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { closeCart(); drawer.classList.remove("open"); }
+    });
+  </script>
+</body>
+</html>
