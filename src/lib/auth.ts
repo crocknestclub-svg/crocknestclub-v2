@@ -5,7 +5,16 @@ import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+
+import getServerSession from 'next-auth';
+
+export async function auth() {
+  return await getServerSession(authOptions);
+}
+
+// ...existing code...
+
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",

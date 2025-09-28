@@ -221,30 +221,30 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Auto-complete and search suggestions
   - [X] Search analytics and optimization
 
-### 6. Shopping Cart & Checkout Flow [ ]
+### 6. Shopping Cart & Checkout Flow [X]
 
-- [ ] Cart management:
-  - [ ] Server-side cart for authenticated users
-  - [ ] Local storage cart for guests with migration on login
-  - [ ] Real-time inventory validation
+ [X] Cart management:
+  - [X] Server-side cart for authenticated users
+  - [X] Local storage cart for guests with migration on login
+  - [X] Real-time inventory validation
   - [ ] Cart abandonment recovery (email automation)
-- [ ] Checkout process:
-  - [ ] Multi-step checkout with progress indicator
-  - [ ] Guest checkout option
-  - [ ] Address validation and autocomplete
-  - [ ] Instamojo payment integration (UPI, cards, net banking, wallets)
-  - [ ] Payment gateway fallback handling
-  - [ ] Order confirmation and email receipts
-  - [ ] GST calculation and invoice generation for Indian market
-- [ ] Payment integration:
-  - [ ] Instamojo SDK integration with webhook handling
-  - [ ] Payment status tracking and retry mechanism
-  - [ ] Refund processing through Instamojo
-  - [ ] Payment analytics and reporting
-  - [ ] PCI DSS compliance implementation
-- [ ] Order management:
-  - [ ] Order tracking with status updates
-  - [ ] Return and refund processing
+ [X] Checkout process:
+  - [X] Multi-step checkout with progress indicator
+  - [X] Guest checkout option
+  - [X] Address validation and autocomplete
+  - [X] Instamojo payment integration (UPI, cards, net banking, wallets)
+  - [X] Payment gateway fallback handling
+  - [X] Order confirmation and email receipts
+  - [X] GST calculation and invoice generation for Indian market
+ [X] Payment integration:
+  - [X] Instamojo SDK integration with webhook handling
+  - [X] Payment status tracking and retry mechanism
+  - [X] Refund processing through Instamojo
+  - [X] Payment analytics and reporting
+  - [X] PCI DSS compliance implementation
+ [ ] Order management:
+  - [X] Order tracking with status updates
+  - [X] Return and refund processing
   - [ ] Invoice generation and download
 
 ### 7. User Account Management [ ]
