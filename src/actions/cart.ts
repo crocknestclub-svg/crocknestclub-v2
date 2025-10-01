@@ -8,8 +8,30 @@ export async function getServerCart(userId: string) {
 }
 
 export async function addToServerCart(userId: string, item: CartItem) {
-  // Real-time inventory validation can be added here
-  // Only productId and quantity are used in CartItem schema
+  // Real-time inventory validation
+  // If a variant is provided, validate against variant inventory
+  // Otherwise, attempt to validate against a default single variant for the product (if present)
+  let availableInventory: number | null = null;
+  if ((item as unknown as CartItem).variant) {
+    const variant = await prisma.productVariant.findUnique({ where: { id: (item as unknown as CartItem).variant as string } });
+    availableInventory = variant?.inventory ?? null;
+  } else {
+    // Fallback: pick first variant for this product (if catalog uses variants)
+    const firstVariant = await prisma.productVariant.findFirst({ where: { productId: item.id } });
+    availableInventory = firstVariant?.inventory ?? null;
+  }
+
+  const existingForUserAndProduct = await prisma.cartItem.findFirst({
+    where: { userId, productId: item.id },
+  });
+
+  if (availableInventory !== null) {
+    const desiredQuantity = (existingForUserAndProduct?.quantity ?? 0) + item.quantity;
+    if (desiredQuantity > availableInventory) {
+      throw new Error('Insufficient inventory for this item');
+    }
+  }
+
   const existing = await prisma.cartItem.findFirst({
     where: { userId, productId: item.id },
   });

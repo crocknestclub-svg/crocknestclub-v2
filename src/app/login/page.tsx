@@ -47,8 +47,9 @@ export default function LoginPage() {
           {loading ? "Signing in..." : "Sign In"}
         </Button>
       </form>
-      <div className="mt-4 text-center">
+      <div className="mt-4 space-y-2 text-center">
         <Button variant="outline" className="w-full" onClick={() => signIn("google")}>Sign in with Google</Button>
+        <a className="text-sm text-blue-600 hover:underline" href="/forgot-password">Forgot password?</a>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ export async function requestPayment({
   email,
   phone,
   redirect_url,
+  webhook,
+  custom_order_id,
 }: {
   purpose: string;
   amount: string;
@@ -14,6 +16,8 @@ export async function requestPayment({
   email: string;
   phone: string;
   redirect_url: string;
+  webhook?: string;
+  custom_order_id?: string;
 }) {
   return await createPayment({
     purpose,
@@ -22,6 +26,8 @@ export async function requestPayment({
     email,
     phone,
     redirect_url,
+    webhook,
+    custom_order_id,
   });
 }
 
@@ -37,4 +43,16 @@ export async function refundPayment(paymentId: string, type: 'QFL' | 'TNR' = 'QF
     type,
   });
   return response.data;
+}
+
+export async function pollPaymentStatus(paymentRequestId: string, attempts = 5, intervalMs = 2000) {
+  for (let i = 0; i < attempts; i++) {
+    const status = await getPaymentStatus(paymentRequestId);
+    const s = status?.payment_request?.payment?.status || status?.payment_request?.status;
+    if (s === 'Credit' || s === 'Completed' || s === 'Failed' || s === 'Cancelled') {
+      return status;
+    }
+    await new Promise((r) => setTimeout(r, intervalMs));
+  }
+  return null;
 }

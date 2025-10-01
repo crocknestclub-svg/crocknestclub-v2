@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "../src/styles/theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +25,41 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            function send(metric){
+              try{navigator.sendBeacon('/api/perf/vitals', JSON.stringify(metric));}catch(e){fetch('/api/perf/vitals',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(metric)})}
+            }
+            if (window.PerformanceObserver) {
+              try {
+                new PerformanceObserver((list)=>{
+                  list.getEntries().forEach((entry)=>{
+                    send({ name: 'LCP', value: entry.startTime });
+                  });
+                }).observe({ type: 'largest-contentful-paint', buffered: true });
+                new PerformanceObserver((list)=>{
+                  list.getEntries().forEach((entry)=>{
+                    // (entry as any).processingStart etc.
+                    send({ name: 'FID', value: (entry as any).processingStart - (entry as any).startTime });
+                  });
+                }).observe({ type: 'first-input', buffered: true });
+              } catch {}
+            }
+          })();
+        `}} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').catch(()=>{});
+            });
+          }
+        `}} />
       </body>
     </html>
   );

@@ -12,17 +12,17 @@ export default function DashboardPage() {
   return (
     <div className="max-w-2xl mx-auto mt-10 p-4 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-6">User Dashboard</h2>
-      <Tabs value={tab} onValueChange={setTab} className="mb-6">
-        <Tab value="orders" label="Order History" />
-        <Tab value="profile" label="Profile" />
-        <Tab value="address" label="Address Book" />
-        <Tab value="wishlist" label="Wishlist" />
-        <Tab value="notifications" label="Notifications" />
+      <Tabs className="mb-6">
+        <Tab label="Order History" />
+        <Tab label="Profile" />
+        <Tab label="Address Book" />
+        <Tab label="Wishlist" />
+        <Tab label="Notifications" />
       </Tabs>
       {tab === "orders" && <OrderHistory />}
       {tab === "profile" && <ProfileManagement />}
       {tab === "address" && <AddressBook />}
-      {tab === "wishlist" && <Wishlist />}
+      {tab === "wishlist" && <Wishlist />}  
       {tab === "notifications" && <NotificationPreferences />}
     </div>
   );

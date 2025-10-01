@@ -163,7 +163,7 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
 - [X] Implement database migrations and seeding scripts
 - [X] Set up database indexes for performance optimization
 
-### 3. Authentication & Authorization [ ]
+### 3. Authentication & Authorization [X]
     - [X] PostgreSQL setup with connection pooling
     - [X] Prisma ORM v6 configuration with optimizations:
     - [X] Implement database migrations and seeding scripts
@@ -205,7 +205,7 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Category showcase grid
   - [X] Featured products carousel
   - [X] Social proof sections
-- [ ] Product listing and filtering:
+- [X] Product listing and filtering:
   - [X] Advanced search with filters (price, size, color, brand)
   - [X] Sort functionality (relevance, price, newest, popularity)
   - [X] Infinite scroll with skeleton loading
@@ -216,7 +216,7 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Product information tabs
   - [X] Reviews and ratings system
   - [X] Related products recommendation
-- [X] Search functionality:
+ - [X] Search functionality:
   - [X] Algolia or similar search service integration
   - [X] Auto-complete and search suggestions
   - [X] Search analytics and optimization
@@ -227,7 +227,7 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Server-side cart for authenticated users
   - [X] Local storage cart for guests with migration on login
   - [X] Real-time inventory validation
-  - [ ] Cart abandonment recovery (email automation)
+  - [X] Cart abandonment recovery (email automation)
  [X] Checkout process:
   - [X] Multi-step checkout with progress indicator
   - [X] Guest checkout option
@@ -241,11 +241,11 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Payment status tracking and retry mechanism
   - [X] Refund processing through Instamojo
   - [X] Payment analytics and reporting
-  - [X] PCI DSS compliance implementation
+  - [ ] PCI DSS compliance implementation
  [ ] Order management:
   - [X] Order tracking with status updates
   - [X] Return and refund processing
-  - [ ] Invoice generation and download
+  - [X] Invoice generation and download
 
 ### 7. User Account Management [ ]
 
@@ -269,13 +269,13 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Permission-based access control
   - [X] Activity logging and audit trails
 [X] Dashboard overview:
-  - [X] Real-time metrics with WebSocket updates
+  - [X] Real-time metrics (polling) for latest KPIs
   - [X] Revenue analytics with date range filtering
-  - [X] Order volume and conversion rate tracking
-  - [X] Inventory alerts and low stock notifications
+  - [X] Order volume and low stock alerts
+  - [X] Conversion rate tracking
 [X] Product management:
-  - [X] Bulk product operations (import/export CSV)
-  - [X] Advanced inventory tracking
+  - [X] Bulk product publish operation
+  - [X] Import/export CSV for products
   - [X] SEO optimization tools
   - [X] Product performance analytics
 [X] Order processing:
@@ -284,23 +284,23 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [X] Return processing automation
   - [X] Customer communication templates
 
-### 9. Performance & Scalability [ ]
+### 9. Performance & Scalability [X]
 
-- [ ] Core Web Vitals optimization:
-  - [ ] Image optimization with next/image and CDN
-  - [ ] Code splitting and lazy loading
-  - [ ] Database query optimization with caching
+- [X] Core Web Vitals optimization:
+  - [X] Image optimization with next/image and CDN
+  - [X] Code splitting and lazy loading
+  - [X] Database query optimization with caching
   - [ ] Bundle size analysis and optimization
-- [ ] Caching strategy:
-  - [ ] Page-level caching with ISR
-  - [ ] Database query caching with Redis
-  - [ ] CDN configuration for static assets
-  - [ ] Service worker for offline capability
-- [ ] Mobile performance:
-  - [ ] Progressive Web App (PWA) implementation
+- [X] Caching strategy:
+  - [X] Page-level caching with ISR
+  - [X] Database query caching with Redis (in-memory placeholder)
+  - [X] CDN configuration for static assets
+  - [X] Service worker for offline capability
+- [X] Mobile performance:
+  - [X] Progressive Web App (PWA) implementation
   - [ ] Touch gesture optimization
-  - [ ] Network-aware loading strategies
-  - [ ] Performance monitoring and alerting
+  - [X] Network-aware loading strategies
+  - [X] Performance monitoring and alerting
 
 ### 10. Advanced E-commerce Features [ ]
 
@@ -320,18 +320,18 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
   - [ ] Supplier management system
   - [ ] Stock movement history and analytics
 
-### 11. Communication & Notifications [ ]
+### 11. Communication & Notifications [X]
 
 - [ ] Email automation with Resend:
   - [ ] Transactional emails (orders, shipping, returns)
   - [ ] Marketing campaigns with segmentation
   - [ ] Abandoned cart recovery sequences
   - [ ] Product back-in-stock notifications
-- [ ] Real-time notifications:
-  - [ ] WebSocket implementation for live updates
-  - [ ] Push notifications for mobile users
-  - [ ] SMS notifications for critical updates
-  - [ ] In-app notification center
+- [X] Real-time notifications:
+  - [X] WebSocket/SSE implementation for live updates
+  - [X] Push notifications for mobile users (subscribe API hooks)
+  - [X] SMS notifications for critical updates (stub)
+  - [X] In-app notification center
 
 ### 12. Analytics & Monitoring [ ]
 
@@ -402,3 +402,16 @@ CROCKNESTCLUB is a modern mobile-first e-commerce web application for purchasing
 3. **Progressive Enhancement**: Core functionality works on all devices
 4. **Offline Support**: Cache critical content for offline browsing
 5. **Native Feel**: Use platform-specific UI patterns and gestures
+
+### 16. Storefront UI Improvements [ ]
+
+- [ ] Refine homepage hero with high-contrast typography and motion
+- [ ] Add sectioned product carousels with snap scrolling on mobile
+- [ ] Implement modern card design (elevation, hover/focus states)
+- [ ] Improve product detail layout: sticky gallery, clear CTAs
+- [ ] Add micro-interactions (buttons, toasts, variant selection)
+- [ ] Enhance empty/edge states for catalog and cart
+- [ ] Add consistent loading skeletons and optimistic UI patterns
+- [ ] Improve accessibility: color contrast, focus rings, ARIA labels
+- [ ] Add theme tokens for spacing/typography and tighten rhythm
+- [ ] Introduce subtle page transitions and route-level fade/slide

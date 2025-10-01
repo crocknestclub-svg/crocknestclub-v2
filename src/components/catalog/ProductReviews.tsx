@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { createReview } from "@/src/actions/review";
 
 interface Review {
   user: string;
@@ -6,7 +8,9 @@ interface Review {
   comment: string;
 }
 
-export default function ProductReviews({ reviews }: { reviews: Review[] }) {
+export default function ProductReviews({ reviews, productId }: { reviews: Review[]; productId?: string }) {
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
   return (
     <div className="mb-4">
       <h2 className="font-bold text-lg mb-2">Reviews</h2>
@@ -23,7 +27,21 @@ export default function ProductReviews({ reviews }: { reviews: Review[] }) {
           ))}
         </ul>
       )}
-      {/* TODO: Add review form and ratings system */}
+      {productId && (
+        <form className="mt-4 space-y-2" onSubmit={async (e)=>{ e.preventDefault(); await createReview({ productId, rating, comment }); setComment(""); }}>
+          <div>
+            <label className="block text-sm mb-1">Rating</label>
+            <select className="border rounded px-2 py-1" value={rating} onChange={e=>setRating(Number(e.target.value))}>
+              {[5,4,3,2,1].map(r=> <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm mb-1">Comment</label>
+            <textarea className="w-full border rounded px-2 py-1" value={comment} onChange={e=>setComment(e.target.value)} />
+          </div>
+          <button className="px-4 py-2 bg-neutral-800 text-white rounded" type="submit">Submit Review</button>
+        </form>
+      )}
     </div>
   );
 }
