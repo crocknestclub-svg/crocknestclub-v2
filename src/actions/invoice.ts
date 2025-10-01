@@ -1,5 +1,6 @@
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
+import { calculateGst } from '@/src/lib/gst';
 
 export async function generateInvoice({
   orderId,
@@ -29,7 +30,10 @@ export async function generateInvoice({
     doc.text(`${p.name} x${p.quantity} - ₹${p.price * p.quantity}`);
   });
   doc.moveDown();
-  doc.text(`Total: ₹${total}`);
+  const { tax, totalWithTax, rate } = calculateGst(total);
+  doc.text(`Subtotal: ₹${total}`);
+  doc.text(`GST (${Math.round(rate*100)}%): ₹${tax}`);
+  doc.text(`Total: ₹${totalWithTax}`);
   doc.end();
   return filePath;
 }

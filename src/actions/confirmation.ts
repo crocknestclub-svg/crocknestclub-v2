@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { prisma } from '../lib/prisma';
 
 export async function sendOrderConfirmation({
   email,
@@ -23,5 +24,14 @@ export async function sendOrderConfirmation({
     to: email,
     subject: 'Order Confirmation',
     text: `Your order ${orderId} has been placed successfully.`,
+  });
+
+  // Record basic payment analytics event
+  await prisma.searchEvent.create({
+    data: {
+      userId: undefined,
+      query: `order_confirmation:${orderId}`,
+      resultsCount: 1,
+    },
   });
 }

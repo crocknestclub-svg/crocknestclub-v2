@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
+import { registerUser } from "@/src/actions/auth";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -15,16 +16,17 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    // TODO: Implement registration API call
-    // For demo, auto-login with credentials
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-    setLoading(false);
-    if (res?.error) setError(res.error);
-    if (res?.ok) window.location.href = "/";
+    try {
+      await registerUser({ name, email, password });
+      const res = await signIn("credentials", { redirect: false, email, password });
+      setLoading(false);
+      if (res?.error) setError(res.error);
+      if (res?.ok) window.location.href = "/";
+      return;
+    } catch (e: unknown) {
+      setError((e as Error).message ?? "Registration failed");
+      setLoading(false);
+    }
   };
 
   return (

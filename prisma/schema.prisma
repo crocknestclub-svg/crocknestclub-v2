@@ -18,6 +18,7 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String         @default("CUSTOMER")
+  passwordHash  String?
   addresses     Address[]
   orders        Order[]
   reviews       Review[]
@@ -37,6 +38,7 @@ model Product {
   description     String?
   slug            String           @unique
   status          String           @default("DRAFT")
+  brand           String?
   metaTitle       String?
   metaDescription String?
   basePrice       Decimal          @db.Money
@@ -122,7 +124,10 @@ model ProductVariant {
   product   Product? @relation(fields: [productId], references: [id])
   productId String?
   name      String
+  size      String?
+  color     String?
   price     Decimal  @db.Money
+  inventory Int      @default(0)
 }
 
 model ProductImage {
@@ -130,4 +135,31 @@ model ProductImage {
   product   Product? @relation(fields: [productId], references: [id])
   productId String?
   url       String
+}
+
+model SearchEvent {
+  id           String   @id @default(cuid())
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  query       String
+  resultsCount Int
+  createdAt   DateTime @default(now())
+}
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { requestPasswordReset } from "@/src/actions/auth";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -12,11 +13,12 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-    // TODO: Implement password reset API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await requestPasswordReset(email);
       setMessage("If your email exists, a reset link will be sent.");
-    }, 1000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
